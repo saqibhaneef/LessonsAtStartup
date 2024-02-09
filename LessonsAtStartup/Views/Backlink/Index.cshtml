@@ -1,0 +1,205 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+
+<div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Backlinks</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="post">Select Post</label>
+                            <select id="post" class="form-control">
+                                <option selected>Select Post</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputUrl">URL</label>
+                            <input type="url" class="form-control" id="inputUrl" placeholder="https://example.com/post" disabled>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="datepicker">Published</label>
+                                <input type="date" class="form-control datepicker" id="datepicker" disabled>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">Tags</label>
+                                <input type="text" class="form-control" data-role="tagsinput" id="tags" disabled>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="category">Category</label>
+                                <select id="category" class="form-control" disabled>
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="country">Country</label>
+                                <select id="country" class="form-control" disabled>
+                                    <option selected>Select Country</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="table-responsive">
+                                <table class="table align-content-center">
+                                    <thead>
+                                        <tr>                                          
+                                            <td>
+                                                <label>Inbound internal links</label>
+                                            </td>
+                                            <td>
+                                                <label>Outbound internal links</label>
+                                            </td>
+                                            <td>
+                                                <label>Outbound external links</label>
+                                            </td>
+                                            <td>
+                                                <label>Actions</label>
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <input type="number" class="form-control" placeholder="Inbound internal links">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" placeholder="Outbound internal links">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" placeholder="Outbound external links">
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-success" value="+">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <input type="number" class="form-control" placeholder="Inbound internal links">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" placeholder="Outbound internal links">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" placeholder="Outbound external links">
+                                            </td>
+                                            <td>
+                                                <input type="button" class="btn btn-success" value="+">
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="card shadow mb-4">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Add Category
+            </button>
+        </div>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Age</th>
+                                <th>Start date</th>
+                                <th>Salary</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <tr>
+                                <td>Tiger Nixon</td>
+                                <td>System Architect</td>
+                                <td>Edinburgh</td>
+                                <td>61</td>
+                                <td>2011/04/25</td>
+                                <td>$320,800</td>
+                            </tr>
+                            <tr>
+                                <td>Garrett Winters</td>
+                                <td>Accountant</td>
+                                <td>Tokyo</td>
+                                <td>63</td>
+                                <td>2011/07/25</td>
+                                <td>$170,750</td>
+                            </tr>
+                            <tr>
+                                <td>Ashton Cox</td>
+                                <td>Junior Technical Author</td>
+                                <td>San Francisco</td>
+                                <td>66</td>
+                                <td>2009/01/12</td>
+                                <td>$86,000</td>
+                            </tr>
+                            <tr>
+                                <td>Donna Snider</td>
+                                <td>Customer Support</td>
+                                <td>New York</td>
+                                <td>27</td>
+                                <td>2011/01/25</td>
+                                <td>$112,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+<script src="~/lib/vendor/jquery/jquery.min.js"></script>
+<script src="~/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<script src="~/lib/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="~/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
