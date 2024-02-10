@@ -7,9 +7,9 @@ namespace LessonsAtStartup.Repositories
     public interface ICategoryService
     {
         IEnumerable<CategoryModel> GetCategories();
-        Category GetById(int categoryId);
+        CategoryModel GetById(int categoryId);
         void Insert(CategoryModel category);
         void Delete(int categoryId);
-        void Update(Category category);        
+        void Update(CategoryModel category);        
     }
 }

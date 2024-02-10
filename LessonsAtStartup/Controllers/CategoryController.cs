@@ -40,5 +40,17 @@ namespace LessonsAtStartup.Controllers
             return Json("ok"); ;
         }
 
+        public IActionResult _Edit(int id)
+        {
+            var category = _categoryService.GetById(id);
+            return PartialView(category);
+        }
+        [HttpPost]
+        public IActionResult Edit(CategoryModel categoryModel)
+        {
+            _categoryService.Update(categoryModel);
+            return Json("ok");
+        }
+
     }
 }

@@ -5,10 +5,7 @@
 
 
 
-<script src="~/lib/vendor/jquery/jquery.min.js"></script>
-<script src="~/lib/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="~/lib/vendor/datatables/jquery.datatables.js"></script>
-<script src="~/lib/vendor/datatables/datatables.bootstrap4.min.js"></script>
+
 
 
 
@@ -22,7 +19,7 @@
     <div id="ajaxresult">
         <partial name="_categoriesList" model="Model"></partial>
     </div>
-    <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content" id="modalBody">
             </div>
@@ -31,7 +28,8 @@
 
 
     
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@* <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> *@
+<script src="~/lib/sweetalert.min.js"></script>
 <script>
     $(document).ready(function () {
         $("#btnAdd").click(function () {
@@ -40,11 +38,9 @@
                 url: "Category/_Create",
                 method: "Get",
                 success: function (response) {
-                    debugger
                     $("#modalBody").html(response);
-                    $("#categoryModal").show();
-                    $("#btnUpdate").hide();
-                    $("#btnSave").show();
+                    // $("#categoryModal").show();
+                    $("#categoryModal").show({ show: true });                  
                 },
                 error: function () {
 
@@ -63,9 +59,7 @@
             data: { id: id },
             success: function (response) {
                 $("#modalBody").html(response);
-                $("#categoryModal").show();
-                $("#btnSave").hide();
-                $("#btnUpdate").show();
+                $("#categoryModal").show({ show: true });               
             },
             error: function () {
 
@@ -82,9 +76,7 @@
             data: { id: id },
             success: function (response) {
                 $("#modalBody").html(response);
-                $("#categoryModal").show();
-                $("#btnSave").hide();
-                $("#btnUpdate").hide();
+                $("#categoryModal").show();                
             },
             error: function () {
 
@@ -126,7 +118,7 @@
     }
 
 
-    function confirmation(btn) {
+    function Confirmation(btn) {
         swal({
             title: "Are you sure to delete?",
             text: "",

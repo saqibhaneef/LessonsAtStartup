@@ -20,9 +20,16 @@ namespace LessonsAtStartup.Repositories
             _categoryRepository.Save();
         }
 
-        public Category GetById(int categoryId)
+        public CategoryModel GetById(int categoryId)
         {
-            throw new NotImplementedException();
+            Category category= _categoryRepository.GetById(categoryId);
+            return new CategoryModel()
+            {
+                Id=category.Id,
+                Name=category.Name,
+                Description=category.Description,
+                CreatedOn = category.CreatedOn
+            };
         }
 
         public IEnumerable<CategoryModel> GetCategories()
@@ -56,9 +63,16 @@ namespace LessonsAtStartup.Repositories
             _categoryRepository.Save();
         }
 
-        public void Update(Category category)
+        public void Update(CategoryModel categoryModel)
         {
-            throw new NotImplementedException();
+            Category category = new Category()
+            {
+                Id = categoryModel.Id,
+                Name = categoryModel.Name,
+                Description = categoryModel.Description,
+            };
+            _categoryRepository.Update(category);
+            _categoryRepository.Save();
         }
     }
 }

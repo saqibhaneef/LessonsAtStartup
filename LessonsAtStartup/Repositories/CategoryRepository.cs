@@ -1,5 +1,6 @@
 ﻿using LessonsAtStartup.Data;
 using LessonsAtStartup.Data.Entities;
+using LessonsAtStartup.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LessonsAtStartup.Repositories
@@ -39,7 +40,7 @@ namespace LessonsAtStartup.Repositories
         }
 
         public void Update(Category category)
-        {
+        {            
             _context.Entry(category).State= EntityState.Modified;
         }
 

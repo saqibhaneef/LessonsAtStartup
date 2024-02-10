@@ -7,7 +7,7 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Categories</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -31,9 +31,9 @@
                             <th>@item.Description</th>
                             <th>@item.CreatedOn</th>
                             <th>
-                                <button type="button" class="btn btn-primary btn-sm btnEdit" onclick="Edit(this)" id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button> |
-                                <button type="button" class="btn btn-secondary btn-sm btnDetails" onclick="Details(this)" id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button> |
-                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmation(this)" id="@item.Id">Delete</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="Edit(this)" id="@item.Id" data-toggle="modal" data-target="#categoryModal">Edit</button> |
+                                @* <button type="button" class="btn btn-secondary btn-sm" onclick="Details(this)" id="@item.Id" data-toggle="modal" data-target="#categoryModal">Details</button> | *@
+                                <button type="button" class="btn btn-danger btn-sm" onclick="Confirmation(this)" id="@item.Id">Delete</button>
                             </th>
                         </tr>
                     }

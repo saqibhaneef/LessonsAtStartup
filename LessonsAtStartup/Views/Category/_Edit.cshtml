@@ -1,54 +1,58 @@
-﻿@model CategoryModel 
+﻿@model CategoryModel
 
 @{
     Layout = null;
 }
 
 
-<form Id="SaveForm" method="post">
+<form Id="UpdateForm" method="post">
     <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
         <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
     </div>
     <div class="modal-body">
         <div class="col-md-12 input-group">
             <div class="col-md-12 p-1">
                 <div class="form-group">
+                     <input asp-for="Id" hidden />
                     <label for="name">Name</label>
                     <input type="text" asp-for="Name" class="form-control" id="name" placeholder="Enter name">
                 </div>
-            </div>  
+            </div>
             <div class="col-md-12 p-1">
                 <div class="form-group">
                     <label for="description">Description</label>
                     <input type="text" asp-for="Description" class="form-control" id="description" placeholder="Enter Description">
                 </div>
             </div>
-        </div>               
-    </div>
+        </div>
+    </div>   
+   
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary btnClose" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="submit" class="btn btn-primary" id="btnUpdate">Update</button>
     </div>
 </form>
 
 <script>
-    $("#SaveForm").submit(function (e) {
-        e.preventDefault();        
-        var fdata = new FormData(this);       
+    $("#UpdateForm").submit(function (e) {
+        e.preventDefault();
+        var fdata = new FormData(this);
         $.ajax({
             type: 'post',
-            url: "Category/Create",
+            url: "Category/Edit",
             data: fdata,
             processData: false,
             contentType: false,
             success: function (response) {
+                debugger
                 $(".btnClose").click();
+                $('.modal-backdrop').remove();
                 if (response == "ok") {
-                    $('#ajaxresult').load('@Url.Action("_CategoriesList")');
+                    $('#ajaxresult').load('@Url.Action("_CategoriesList")');                    
                     swal({
                         title: "Succes",
-                        text: "Record added",
+                        text: "Updated!",
                         icon: "success",
                         button: "Ok",
                     });
@@ -67,5 +71,6 @@
             }
 
         })
-    });
+    });    
+
 </script>
