@@ -14,7 +14,7 @@ namespace LessonsAtStartup.Repositories
         }
         public IEnumerable<Post> GetPosts()
         {
-            return _context.Posts.ToList();
+            return _context.Posts.Include(x=>x.Category).ToList();
         }
         public Post GetPostById(int id)
         {

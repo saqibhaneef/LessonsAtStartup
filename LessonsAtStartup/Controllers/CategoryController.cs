@@ -18,10 +18,13 @@ namespace LessonsAtStartup.Controllers
             var list=_categoryService.GetCategories().AsEnumerable();
             return View(list);
         }        
-        public IActionResult _CategoriesList()
+        public IActionResult _CategoriesList(List<CategoryModel> categories)
         {
-            var list = _categoryService.GetCategories().AsEnumerable();
-            return PartialView(list);
+            if (categories.Count == 0)
+            {
+                categories = _categoryService.GetCategories().ToList();
+            }
+            return PartialView(categories);
         }
         public IActionResult _Create()
         {

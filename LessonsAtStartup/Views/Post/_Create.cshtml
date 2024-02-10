@@ -1,0 +1,96 @@
+﻿@model PostModel
+
+@{
+    Layout = null;
+}
+
+
+<form Id="SaveForm" method="post">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New Post</h5>
+        <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" asp-for="Title" class="form-control" id="title" placeholder="Enter Title">
+        </div>
+        <div class="form-group">
+            <label for="url">URL</label>
+            <input type="url" asp-for="Url" class="form-control" id="url" placeholder="https://example.com/post">
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" asp-for="Description" class="form-control" id="description" placeholder="Enter description">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="datepicker">Published</label>
+                <input type="date" asp-for="PublishedDate" class="form-control datepicker" id="datepicker">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="tags">Tags</label>
+                <input type="text" class="form-control" data-role="tagsinput" id="tags">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="category">Category</label>                
+                <select id="category" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    <option value="">--Select--</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="country">Country</label>
+                <select asp-for="Country" id="country" class="form-control">
+                    <option selected>Select Country</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btnClose" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+    </div>
+</form>
+
+<script>
+    BindCountries();
+
+
+    $("#SaveForm").submit(function (e) {
+        e.preventDefault();
+        var fdata = new FormData(this);
+        $.ajax({
+            type: 'post',
+            url: "Post/Create",
+            data: fdata,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $(".btnClose").click();
+                if (response == "ok") {
+                    $('#ajaxresult').load('@Url.Action("_PostsList")');
+                    swal({
+                        title: "Succes",
+                        text: "Record added",
+                        icon: "success",
+                        button: "Ok",
+                    });
+                }
+                else {
+                    swal({
+                        title: "Info",
+                        text: "Something went wrong!",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+
+        })
+    });
+</script>

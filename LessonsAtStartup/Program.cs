@@ -12,7 +12,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IPostRepository, PostRepository>();
+
 builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<IPostService, PostService>();
 
 var app = builder.Build();
 
