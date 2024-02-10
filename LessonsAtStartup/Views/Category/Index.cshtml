@@ -1,118 +1,151 @@
-﻿@{
+﻿@model IEnumerable<CategoryModel>
+@{
     Layout = "_Layout";
 }
 
 
-<div>
+
+<script src="~/lib/vendor/jquery/jquery.min.js"></script>
+<script src="~/lib/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/lib/vendor/datatables/jquery.datatables.js"></script>
+<script src="~/lib/vendor/datatables/datatables.bootstrap4.min.js"></script>
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="inputTitle">Category Name</label>
-                            <input type="text" class="form-control" id="inputTitle" placeholder="Enter Title">
-                        </div>                        
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <div class="container-fluid">
         <div class="card shadow mb-4">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Add Category
-            </button>
-        </div>
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data</h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
-                            </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>                          
-                            <tr>
-                                <td>Donna Snider</td>
-                                <td>Customer Support</td>
-                                <td>New York</td>
-                                <td>27</td>
-                                <td>2011/01/25</td>
-                                <td>$112,000</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+        <button type="button" class="btn btn-primary" id="btnAdd" data-toggle="modal" data-target="#categoryModal">Add New</button>
+       </div> 
+    </div> 
 
+    <div id="ajaxresult">
+        <partial name="_categoriesList" model="Model"></partial>
     </div>
+    <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" id="modalBody">
+            </div>
+        </div>
+    </div>  
+
+
+    
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnAdd").click(function () {
+            debugger
+            $.ajax({
+                url: "Category/_Create",
+                method: "Get",
+                success: function (response) {
+                    debugger
+                    $("#modalBody").html(response);
+                    $("#categoryModal").show();
+                    $("#btnUpdate").hide();
+                    $("#btnSave").show();
+                },
+                error: function () {
+
+                },
+            });//ajax
+        });//btnAdd
+    }); 
+    
+    
+
+    function Edit(btn) {
+        var id = btn.id;
+        $.ajax({
+            url: "Category/_Edit",
+            method: "Get",
+            data: { id: id },
+            success: function (response) {
+                $("#modalBody").html(response);
+                $("#categoryModal").show();
+                $("#btnSave").hide();
+                $("#btnUpdate").show();
+            },
+            error: function () {
+
+            },
+        });//ajax
+    }
+
+
+    function Details(btn) {
+        var id = btn.id;
+        $.ajax({
+            url: "Category/_Details",
+            method: "Get",
+            data: { id: id },
+            success: function (response) {
+                $("#modalBody").html(response);
+                $("#categoryModal").show();
+                $("#btnSave").hide();
+                $("#btnUpdate").hide();
+            },
+            error: function () {
+
+            },
+        });//ajax
+    }
+
+    function Delete(btn) {
+        var id = btn.id;
+        $.ajax({
+            url: "Category/Delete",
+            method: "Get",
+            data: { id: id },
+            success: function (response) {
+                if (response == "ok") {
+                    $('#ajaxresult').load('@Url.Action("_CategoriesList")');
+                    $("#categoryModal").hide();
+                    $('.modal-backdrop').remove();
+                    swal({
+                        title: "Succes",
+                        text: "Deleted!",
+                        icon: "success",
+                        button: "Ok",
+                    });
+                }
+                else {
+                    swal({
+                        title: "Info",
+                        text: "Something went wrong!",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }
+            },
+            error: function () {
+
+            },
+        });//ajax
+    }
+
+
+    function confirmation(btn) {
+        swal({
+            title: "Are you sure to delete?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                debugger;
+                if (willDelete) {
+                    Delete(btn);
+                } else {
+                    swal("Canceled!");
+                }
+            });
+    }
 
 
 
-</div>
-<script src="~/lib/vendor/jquery/jquery.min.js"></script>
-<script src="~/lib/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<script src="~/lib/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="~/lib/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
 
+</script>

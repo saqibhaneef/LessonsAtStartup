@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CategoryModel>
+
+@{
+    Layout = null;
+}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Data</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="categoriesTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>CreatedOn</th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th>@item.Id</th>
+                            <th>@item.Name</th>
+                            <th>@item.Description</th>
+                            <th>@item.CreatedOn</th>
+                            <th>
+                                <button type="button" class="btn btn-primary btn-sm btnEdit" onclick="Edit(this)" id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit</button> |
+                                <button type="button" class="btn btn-secondary btn-sm btnDetails" onclick="Details(this)" id="@item.Id" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button> |
+                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmation(this)" id="@item.Id">Delete</button>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#categoriesTable").dataTable();
+    })
+</script>
