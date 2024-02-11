@@ -18,6 +18,7 @@
                         <th>Title</th>
                         <th>Description</th>
                         <th>Url</th>
+                        <th>Tags</th>
                         <th>Category</th>
                         <th>CreatedOn</th>
                     </tr>
@@ -30,10 +31,16 @@
                             <td>@item.Title>
                             <td>@item.Description</td>
                             <td>@item.Url</td>
+                            <td>
+                                    @foreach (var tag in item.Tags)
+                                    {
+                                    <span class="badge badge-info">@tag.Name</span>
+                                    }
+                            </td>
                             <td>@item.Category.Name</td>
                             <td>@item.CreatedOn</td>
                         </tr>
-                    }                    
+                    }
                 </tbody>
             </table>
         </div>

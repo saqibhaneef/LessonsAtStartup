@@ -13,11 +13,12 @@ namespace LessonsAtStartup.Data.Entities
 
         public DateTime CreatedOn { get; set; }
 
-        //[ForeignKey(nameof(Category))]
+        
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
-        //public List<Tag> Tags { get; set; }
+        public ICollection<PostTag> PostTags { get; set; }
+        
 
     }
 }

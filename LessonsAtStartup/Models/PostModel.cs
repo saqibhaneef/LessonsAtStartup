@@ -22,5 +22,7 @@ namespace LessonsAtStartup.Models
         public CategoryModel Category { get; set; }
 
         public IEnumerable<CategoryModel> Categories { get; set; }
+
+        public IEnumerable<TagModel> Tags { get; set; }
     }
 }

@@ -10,14 +10,30 @@ namespace LessonsAtStartup.Data
         public AppDbContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Post> Posts { get; set; }
-       
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<PostTag> PostTags { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Post>().HasOne(p => p.Category).WithMany(x => x.Posts)
                 .HasForeignKey(x => x.CategoryId).HasPrincipalKey(x => x.Id).IsRequired(false);
+
+            modelBuilder.Entity<PostTag>()
+        .HasKey(bc => new { bc.PostId, bc.TagId });
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(pt => pt.Post)
+                .WithMany(p=>p.PostTags)
+                .HasForeignKey(pt => pt.PostId);
             
+            modelBuilder.Entity<PostTag>()
+                .HasOne(pt => pt.Tag)
+                .WithMany(t=>t.PostTags)
+                .HasForeignKey(pt => pt.TagId);
+
+
             modelBuilder.Entity<Post>(
                 entity =>
                 {

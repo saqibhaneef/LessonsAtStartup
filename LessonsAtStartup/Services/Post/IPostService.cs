@@ -2,7 +2,7 @@
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Services.Post
 {
     public interface IPostService
     {
@@ -10,6 +10,6 @@ namespace LessonsAtStartup.Repositories
         PostModel GetById(int postId);
         void Insert(PostModel post);
         void Delete(int postId);
-        void Update(PostModel post);        
+        void Update(PostModel post);
     }
 }

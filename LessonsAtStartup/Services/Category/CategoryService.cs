@@ -1,9 +1,10 @@
 ﻿using LessonsAtStartup.Data;
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
+using LessonsAtStartup.Repositories.Category;
 using Microsoft.EntityFrameworkCore;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Services.Category
 {
     public class CategoryService : ICategoryService
     {
@@ -22,12 +23,12 @@ namespace LessonsAtStartup.Repositories
 
         public CategoryModel GetById(int categoryId)
         {
-            Category category= _categoryRepository.GetById(categoryId);
+            Category category = _categoryRepository.GetById(categoryId);
             return new CategoryModel()
             {
-                Id=category.Id,
-                Name=category.Name,
-                Description=category.Description,
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
                 CreatedOn = category.CreatedOn
             };
         }
@@ -57,7 +58,7 @@ namespace LessonsAtStartup.Repositories
             {
                 Name = category.Name,
                 Description = category.Description,
-                CreatedOn= DateTime.Now,
+                CreatedOn = DateTime.Now,
             };
             _categoryRepository.Insert(categ);
             _categoryRepository.Save();

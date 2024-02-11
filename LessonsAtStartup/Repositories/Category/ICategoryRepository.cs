@@ -1,6 +1,6 @@
 ﻿using LessonsAtStartup.Data.Entities;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Repositories.Category
 {
     public interface ICategoryRepository : IDisposable
     {

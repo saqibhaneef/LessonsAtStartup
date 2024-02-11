@@ -3,7 +3,7 @@ using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Repositories.Category
 {
     public class CategoryRepository : ICategoryRepository
     {
@@ -15,7 +15,7 @@ namespace LessonsAtStartup.Repositories
 
         public void Delete(int categoryId)
         {
-            var category=GetById(categoryId);
+            var category = GetById(categoryId);
             _context.Categories.Remove(category);
         }
 
@@ -40,11 +40,11 @@ namespace LessonsAtStartup.Repositories
         }
 
         public void Update(Category category)
-        {            
-            _context.Entry(category).State= EntityState.Modified;
+        {
+            _context.Entry(category).State = EntityState.Modified;
         }
 
-        private bool disposedValue=false;
+        private bool disposedValue = false;
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)

@@ -1,9 +1,10 @@
 ﻿using LessonsAtStartup.Data;
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
+using LessonsAtStartup.Repositories.Post;
 using Microsoft.EntityFrameworkCore;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Services.Post
 {
     public class PostService : IPostService
     {
@@ -26,7 +27,7 @@ namespace LessonsAtStartup.Repositories
 
         public IEnumerable<PostModel> GetPosts()
         {
-            var posts=_postRepository.GetPosts().AsEnumerable();
+            var posts = _postRepository.GetPosts().AsEnumerable();
             return posts.Select(x => new PostModel
             {
                 Id = x.Id,
@@ -38,10 +39,16 @@ namespace LessonsAtStartup.Repositories
                 Category = new CategoryModel()
                 {
                     Id = x.Category.Id,
-                    Name=x.Category.Name,
-                    Description=x.Category.Description,
-                    CreatedOn=x.Category.CreatedOn
+                    Name = x.Category.Name,
+                    Description = x.Category.Description,
+                    CreatedOn = x.Category.CreatedOn
                 },
+                Tags = x.PostTags.Select(y => new TagModel()
+                {
+                    Id = y.TagId,
+                    Name = y.Tag.Name,
+                    Description = y.Tag.Description,
+                }),
 
             }).AsEnumerable();
         }
@@ -50,13 +57,13 @@ namespace LessonsAtStartup.Repositories
         {
             Post post = new Post()
             {
-                Title= postModel.Title,
-                Url= postModel.Url,
-                Description=postModel.Description,
-                Country=postModel.Country,
-                CategoryId=postModel.CategoryId,
-                CreatedOn=DateTime.Now,
-                PublishedDate= postModel.PublishedDate
+                Title = postModel.Title,
+                Url = postModel.Url,
+                Description = postModel.Description,
+                Country = postModel.Country,
+                CategoryId = postModel.CategoryId,
+                CreatedOn = DateTime.Now,
+                PublishedDate = postModel.PublishedDate
             };
             _postRepository.InsertPost(post);
             _postRepository.Save();

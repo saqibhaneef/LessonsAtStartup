@@ -3,18 +3,22 @@ using LessonsAtStartup.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Repositories.Post
 {
     public class PostRepository : IPostRepository
     {
         private AppDbContext _context;
         public PostRepository(AppDbContext bookContext)
         {
-            this._context = bookContext;
+            _context = bookContext;
         }
         public IEnumerable<Post> GetPosts()
         {
-            return _context.Posts.Include(x=>x.Category).ToList();
+            return _context.Posts
+                .Include(category => category.Category)
+                .Include(tag => tag.PostTags)
+                     .ThenInclude(tag => tag.Tag).AsNoTracking()
+                          .ToList();
         }
         public Post GetPostById(int id)
         {
@@ -40,14 +44,14 @@ namespace LessonsAtStartup.Repositories
         private bool disposed = false;
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     _context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
         public void Dispose()
         {

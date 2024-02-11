@@ -1,5 +1,8 @@
 using LessonsAtStartup.Data;
-using LessonsAtStartup.Repositories;
+using LessonsAtStartup.Repositories.Category;
+using LessonsAtStartup.Repositories.Post;
+using LessonsAtStartup.Services.Category;
+using LessonsAtStartup.Services.Post;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -19,11 +22,14 @@ builder.Services.AddTransient<IPostService, PostService>();
 
 var app = builder.Build();
 
-using (var serviceScope = app.Services.CreateScope())
+if (app.Environment.IsDevelopment())
 {
-    var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
-    //await dbContext.Database.MigrateAsync();
-    await dbContext.Database.EnsureCreatedAsync();
+    using (var serviceScope = app.Services.CreateScope())
+    {
+        var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        //await dbContext.Database.MigrateAsync();
+        await dbContext.Database.EnsureCreatedAsync();
+    }
 }
 
 

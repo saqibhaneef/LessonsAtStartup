@@ -2,7 +2,7 @@
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 
-namespace LessonsAtStartup.Repositories
+namespace LessonsAtStartup.Services.Category
 {
     public interface ICategoryService
     {
@@ -10,6 +10,6 @@ namespace LessonsAtStartup.Repositories
         CategoryModel GetById(int categoryId);
         void Insert(CategoryModel category);
         void Delete(int categoryId);
-        void Update(CategoryModel category);        
+        void Update(CategoryModel category);
     }
 }

@@ -8,7 +8,7 @@ namespace LessonsAtStartup.Data.Entities
         public string Name { get; set; }
         public string? Description { get; set; }
 
-        public List<PostTag> PostTags { get; set; }
+        public ICollection<PostTag> PostTags { get; set; }
 
     }
 }
