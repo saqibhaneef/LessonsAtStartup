@@ -3,7 +3,7 @@ using LessonsAtStartup.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
-namespace LessonsAtStartup.Repositories.Post
+namespace LessonsAtStartup.Repositories.PostRepo
 {
     public class PostRepository : IPostRepository
     {

@@ -1,6 +1,6 @@
 ﻿using LessonsAtStartup.Data.Entities;
 
-namespace LessonsAtStartup.Repositories.Post
+namespace LessonsAtStartup.Repositories.PostRepo
 {
     public interface IPostRepository : IDisposable
     {

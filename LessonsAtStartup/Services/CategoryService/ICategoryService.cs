@@ -2,7 +2,7 @@
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 
-namespace LessonsAtStartup.Services.Category
+namespace LessonsAtStartup.Services.CategoryService
 {
     public interface ICategoryService
     {

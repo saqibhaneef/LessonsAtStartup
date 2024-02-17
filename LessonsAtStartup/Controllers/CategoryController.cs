@@ -1,5 +1,5 @@
 ﻿using LessonsAtStartup.Models;
-using LessonsAtStartup.Services.Category;
+using LessonsAtStartup.Services.CategoryService;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

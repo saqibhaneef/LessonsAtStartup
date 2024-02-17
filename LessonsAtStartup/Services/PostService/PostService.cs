@@ -1,10 +1,10 @@
 ﻿using LessonsAtStartup.Data;
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
-using LessonsAtStartup.Repositories.Post;
+using LessonsAtStartup.Repositories.PostRepo;
 using Microsoft.EntityFrameworkCore;
 
-namespace LessonsAtStartup.Services.Post
+namespace LessonsAtStartup.Services.PostService
 {
     public class PostService : IPostService
     {

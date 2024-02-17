@@ -3,7 +3,7 @@ using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LessonsAtStartup.Repositories.Category
+namespace LessonsAtStartup.Repositories.CategoryRepo
 {
     public class CategoryRepository : ICategoryRepository
     {

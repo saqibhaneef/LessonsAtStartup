@@ -1,6 +1,6 @@
 ﻿using LessonsAtStartup.Models;
-using LessonsAtStartup.Services.Category;
-using LessonsAtStartup.Services.Post;
+using LessonsAtStartup.Services.CategoryService;
+using LessonsAtStartup.Services.PostService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LessonsAtStartup.Controllers

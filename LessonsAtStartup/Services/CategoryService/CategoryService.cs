@@ -1,10 +1,10 @@
 ﻿using LessonsAtStartup.Data;
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
-using LessonsAtStartup.Repositories.Category;
+using LessonsAtStartup.Repositories.CategoryRepo;
 using Microsoft.EntityFrameworkCore;
 
-namespace LessonsAtStartup.Services.Category
+namespace LessonsAtStartup.Services.CategoryService
 {
     public class CategoryService : ICategoryService
     {

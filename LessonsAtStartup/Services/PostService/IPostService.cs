@@ -2,7 +2,7 @@
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 
-namespace LessonsAtStartup.Services.Post
+namespace LessonsAtStartup.Services.PostService
 {
     public interface IPostService
     {

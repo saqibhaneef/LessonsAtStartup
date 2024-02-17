@@ -1,8 +1,8 @@
 using LessonsAtStartup.Data;
-using LessonsAtStartup.Repositories.Category;
-using LessonsAtStartup.Repositories.Post;
-using LessonsAtStartup.Services.Category;
-using LessonsAtStartup.Services.Post;
+using LessonsAtStartup.Repositories.CategoryRepo;
+using LessonsAtStartup.Repositories.PostRepo;
+using LessonsAtStartup.Services.CategoryService;
+using LessonsAtStartup.Services.PostService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
