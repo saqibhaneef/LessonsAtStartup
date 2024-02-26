@@ -1,0 +1,74 @@
+﻿@model IEnumerable<TagModel>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <button type="button" class="btn btn-primary" id="btnAdd" data-toggle="modal" data-target="#postModal">
+            Add Tag
+        </button>
+    </div>
+</div>
+<div id="ajaxresult">
+    <partial name="_TagList" model="Model"></partial>
+</div>
+<div class="modal" id="tagModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content" id="modalBody">
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $("#dataTable").dataTable();
+
+
+        $("#btnAdd").click(function () {
+            $.ajax({
+                url: "Tag/_Create",
+                method: "Get",
+                success: function (response) {
+                    $("#modalBody").html(response);
+                    $("#tagModal").show({ show: true });
+                },
+                error: function () {
+
+                },
+            });//ajax
+        });//btnAdd
+
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+
+    })
+
+
+    // function Edit(btn) {
+    //     var id = btn.id;
+    //     $.ajax({
+    //         url: "Post/_Edit",
+    //         method: "Get",
+    //         data: { id: id },
+    //         success: function (response) {
+    //             $("#modalBody").html(response);
+    //             $("#postModal").show({ show: true });
+    //         },
+    //         error: function () {
+
+    //         },
+    //     });//ajax
+    // }
+</script>

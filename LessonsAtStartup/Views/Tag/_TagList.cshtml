@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TagModel>
+
+@{
+    Layout = null;
+}
+
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Posts</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>                                                
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>                                                       
+                            <th>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="Edit(this)" id="@item.Id" data-toggle="modal" data-target="#tagModal">Edit</button> |
+                                <button type="button" class="btn btn-danger btn-sm" onclick="Confirmation(this)" id="@item.Id">Delete</button>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

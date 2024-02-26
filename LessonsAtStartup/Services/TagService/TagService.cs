@@ -1,4 +1,5 @@
-﻿using LessonsAtStartup.Models;
+﻿using LessonsAtStartup.Data.Entities;
+using LessonsAtStartup.Models;
 using LessonsAtStartup.Repositories.TagRepo;
 
 namespace LessonsAtStartup.Services.TagService
@@ -32,9 +33,15 @@ namespace LessonsAtStartup.Services.TagService
             return tags;
         }
 
-        public void Insert(TagModel tag)
+        public void Insert(TagModel tagModel)
         {
-            throw new NotImplementedException();
+            Tag tag = new Tag()
+            {
+                Name = tagModel.Name,
+                Description = tagModel.Description
+            };
+            _tagRepository.InsertTag(tag);
+            _tagRepository.Save();
         }
 
         public void Update(TagModel tag)
