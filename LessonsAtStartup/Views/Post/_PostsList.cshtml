@@ -20,7 +20,9 @@
                         <th>Url</th>
                         <th>Tags</th>
                         <th>Category</th>
+                        <th>Country</th>
                         <th>CreatedOn</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,7 +40,12 @@
                                     }
                             </td>
                             <td>@item.Category.Name</td>
+                            <td>@item.Country</td>
                             <td>@item.CreatedOn</td>
+                            <th>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="Edit(this)" id="@item.Id" data-toggle="modal" data-target="#postModal">Edit</button> |
+                                <button type="button" class="btn btn-danger btn-sm" onclick="Confirmation(this)" id="@item.Id">Delete</button>
+                            </th>
                         </tr>
                     }
                 </tbody>

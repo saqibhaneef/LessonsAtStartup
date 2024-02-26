@@ -1,6 +1,7 @@
 ﻿using LessonsAtStartup.Models;
 using LessonsAtStartup.Services.CategoryService;
 using LessonsAtStartup.Services.PostService;
+using LessonsAtStartup.Services.TagService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LessonsAtStartup.Controllers
@@ -9,10 +10,12 @@ namespace LessonsAtStartup.Controllers
     {
         private readonly IPostService _postService;
         private readonly ICategoryService _categoryService;
-        public PostController(IPostService postService, ICategoryService categoryService)
+        private readonly ITagService _tagService;
+        public PostController(IPostService postService, ICategoryService categoryService,ITagService tagService)
         {
             _postService = postService;
             _categoryService = categoryService;
+            _tagService = tagService;
 
         }
         public IActionResult Index()
@@ -31,16 +34,41 @@ namespace LessonsAtStartup.Controllers
         public IActionResult _Create()
         {
             var catgories=_categoryService.GetCategories();
+            var tags = _tagService.GetTags();
             PostModel postModel = new PostModel()
             {
-                Categories = catgories
+                Categories = catgories,
+                Tags= tags
             };
+
             return PartialView(postModel);
         }
         [HttpPost]
         public IActionResult Create(PostModel postModel)
         {
             _postService.Insert(postModel);
+            return Json("ok");
+        }
+
+        public IActionResult _Edit(int id)
+        {
+            var tags= _tagService.GetTags();
+            List<int> tagIds=new List<int>();
+
+            var post = _postService.GetById(id);
+            
+            post.Tags.ToList().ForEach(x=>tagIds.Add(x.Id));//get tag ids against post
+
+            post.Tags = tags;
+            post.TagIds= tagIds;
+            post.Categories = _categoryService.GetCategories();
+
+            return PartialView(post);
+        }
+        [HttpPost]
+        public IActionResult Edit(PostModel postModel)
+        {
+            _postService.Update(postModel);
             return Json("ok");
         }
     }

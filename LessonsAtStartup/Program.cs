@@ -1,8 +1,10 @@
 using LessonsAtStartup.Data;
 using LessonsAtStartup.Repositories.CategoryRepo;
 using LessonsAtStartup.Repositories.PostRepo;
+using LessonsAtStartup.Repositories.TagRepo;
 using LessonsAtStartup.Services.CategoryService;
 using LessonsAtStartup.Services.PostService;
+using LessonsAtStartup.Services.TagService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -16,9 +18,13 @@ builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configur
 
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IPostRepository, PostRepository>();
+builder.Services.AddTransient<ITagRepository, TagRepository>();
 
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IPostService, PostService>();
+builder.Services.AddTransient<ITagService, TagService>();
+
+
 
 var app = builder.Build();
 

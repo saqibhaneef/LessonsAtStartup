@@ -6,10 +6,11 @@ namespace LessonsAtStartup.Repositories.PostRepo
     {
 
         IEnumerable<Post> GetPosts();
-        Post GetPostById(int bookId);
-        void InsertPost(Post book);
-        void DeletePost(int bookID);
-        void UpdatePost(Post book);
+        Post GetPostById(int postId);
+        void InsertPost(Post post);
+        void InsertPostTag(PostTag postTag);
+        void DeletePost(int postId);
+        void UpdatePost(Post post);
         void Save();
     }
 }

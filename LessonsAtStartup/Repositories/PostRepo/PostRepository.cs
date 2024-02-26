@@ -22,7 +22,10 @@ namespace LessonsAtStartup.Repositories.PostRepo
         }
         public Post GetPostById(int id)
         {
-            return _context.Posts.Find(id);
+            return _context.Posts.
+                Include(x => x.Category).
+                Include(x => x.PostTags).
+                       ThenInclude(x=>x.Tag).Where(x => x.Id == id).FirstOrDefault();
         }
         public void InsertPost(Post post)
         {
@@ -57,6 +60,11 @@ namespace LessonsAtStartup.Repositories.PostRepo
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        public void InsertPostTag(PostTag postTag)
+        {
+            _context.PostTags.Add(postTag);
         }
     }
 }

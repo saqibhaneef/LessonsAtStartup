@@ -4,7 +4,7 @@
     Layout = "_Layout";
 }
 
-<link href="~/css/tagsinput.css" rel="stylesheet" />
+
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <button type="button" class="btn btn-primary" id="btnAdd" data-toggle="modal" data-target="#postModal">
@@ -16,16 +16,18 @@
     <partial name="_PostsList" model="Model"></partial>
 </div>
 <div class="modal" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content" id="modalBody">
         </div>
     </div>
 </div>
 
 <script src="~/lib/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function () {        
+
         $("#dataTable").dataTable();
         
 
@@ -42,6 +44,15 @@
                 },
             });//ajax
         });//btnAdd
+
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        
     })    
 
     function BindCountries(){
@@ -294,5 +305,22 @@
         $.each(countryOptions, function (index, item) {
             $('#country').append(`<option value="${item.value}">${item.label}</option>`);
         });
+    }
+
+
+    function Edit(btn) {
+        var id = btn.id;
+        $.ajax({
+            url: "Post/_Edit",
+            method: "Get",
+            data: { id: id },
+            success: function (response) {
+                $("#modalBody").html(response);
+                $("#postModal").show({ show: true });
+            },
+            error: function () {
+
+            },
+        });//ajax
     }
 </script>

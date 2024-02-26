@@ -2,17 +2,21 @@
 using LessonsAtStartup.Data.Entities;
 using LessonsAtStartup.Models;
 using LessonsAtStartup.Repositories.PostRepo;
+using LessonsAtStartup.Repositories.TagRepo;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace LessonsAtStartup.Services.PostService
 {
     public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
-        public PostService(IPostRepository postRepository)
+        private readonly ITagRepository _tagRepository;
+        public PostService(IPostRepository postRepository,ITagRepository tagRepository)
         {
 
             _postRepository = postRepository;
+            _tagRepository = tagRepository;
 
         }
         public void Delete(int postId)
@@ -22,13 +26,29 @@ namespace LessonsAtStartup.Services.PostService
 
         public PostModel GetById(int postId)
         {
-            throw new NotImplementedException();
+            var post=_postRepository.GetPostById(postId);
+            return new  PostModel(){
+                Id=post.Id,
+                Title=post.Title,
+                Url=post.Url,
+                Description=post.Description,
+                Country=post.Country,
+                Category=new CategoryModel()
+                {
+                    Id=post.Category.Id,
+                    Name=post.Category.Name,
+                },
+                Tags=post.PostTags?.Select(t => new TagModel()
+                {
+                    Id=t.Tag.Id,
+                    Name=t.Tag.Name
+                })
+            };
         }
 
         public IEnumerable<PostModel> GetPosts()
-        {
-            var posts = _postRepository.GetPosts().AsEnumerable();
-            return posts.Select(x => new PostModel
+        {            
+            var posts = _postRepository.GetPosts().Select(x => new PostModel
             {
                 Id = x.Id,
                 Title = x.Title,
@@ -50,7 +70,11 @@ namespace LessonsAtStartup.Services.PostService
                     Description = y.Tag.Description,
                 }),
 
-            }).AsEnumerable();
+            }).ToList();
+
+
+            
+            return posts;
         }
 
         public void Insert(PostModel postModel)
@@ -63,15 +87,37 @@ namespace LessonsAtStartup.Services.PostService
                 Country = postModel.Country,
                 CategoryId = postModel.CategoryId,
                 CreatedOn = DateTime.Now,
-                PublishedDate = postModel.PublishedDate
-            };
+                PublishedDate = postModel.PublishedDate               
+            };                       
             _postRepository.InsertPost(post);
             _postRepository.Save();
+
+            foreach (var tagId in postModel.TagIds)
+            {
+                var postTag = new PostTag()
+                {
+                    PostId=post.Id,
+                    TagId=tagId
+                };
+                _postRepository.InsertPostTag(postTag);
+                _postRepository.Save();
+            }
         }
 
-        public void Update(PostModel post)
+        public void Update(PostModel postModel)
         {
-            throw new NotImplementedException();
+            Post post = new Post()
+            {
+                Id = postModel.Id,
+                Title = postModel.Title,
+                Url = postModel.Url,
+                Description = postModel.Description,
+                Country = postModel.Country
+            };
+            _postRepository.UpdatePost(post);
+            _postRepository.Save();
+
+
         }
     }
 }

@@ -4,13 +4,14 @@
     Layout = null;
 }
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
-<form Id="SaveForm" method="post">
+
+<form Id="UpdateForm" method="post">
     <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Create New Post</h5>
         <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
     </div>
     <div class="modal-body">
+        <input asp-for="Id" hidden/>
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" asp-for="Title" class="form-control" id="title" placeholder="Enter Title">
@@ -31,13 +32,13 @@
             <div class="form-group col-md-6">
                 <label for="tags">Tags</label>
                 <div class="form-group row pl-3">
-                <select name="TagIds" id="multiple-checkboxes" asp-for="TagIds" classs="form-control" asp-items="@(new SelectList(Model.Tags,"Id","Name"))" multiple="multiple"></select>
+                <select name="TagIds" id="multiple-checkboxes" asp-for="TagIds" classs="form-control" asp-items="@(new MultiSelectList(Model.Tags,"Id","Name"))" multiple="multiple"></select>                
                 </div>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="category">Category</label>                
+                <label for="category">Category</label>
                 <select id="category" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
                     <option value="">--Select--</option>
                 </select>
@@ -52,11 +53,11 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary btnClose" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
+        <button type="submit" class="btn btn-primary" id="btnUpdate">Update</button>
     </div>
 </form>
 
-<script>
+<script>    
 
     $(document).ready(function () {
         $('#multiple-checkboxes').multiselect({
@@ -64,25 +65,23 @@
         });
     });
 
-    BindCountries();
-  
-
-    $("#SaveForm").submit(function (e) {
+    $("#UpdateForm").submit(function (e) {
         e.preventDefault();
         var fdata = new FormData(this);
         $.ajax({
             type: 'post',
-            url: "Post/Create",
+            url: "Post/Edit",
             data: fdata,
             processData: false,
             contentType: false,
             success: function (response) {
                 $(".btnClose").click();
+                $('.modal-backdrop').remove();
                 if (response == "ok") {
-                    $('#ajaxresult').load('@Url.Action("_PostsList")');
+                    $('#ajaxresult').load('@Url.Action("_PostList")');
                     swal({
                         title: "Succes",
-                        text: "Record added",
+                        text: "Updated!",
                         icon: "success",
                         button: "Ok",
                     });
