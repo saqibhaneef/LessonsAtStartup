@@ -13,12 +13,20 @@ namespace LessonsAtStartup.Services.TagService
         }
         public void Delete(int tagId)
         {
-            throw new NotImplementedException();
+            _tagRepository.DeleteTag(tagId);
+            _tagRepository.Save();
         }
 
         public TagModel GetById(int tagId)
         {
-            throw new NotImplementedException();
+            var tag=_tagRepository.GetTagById(tagId);
+            TagModel tagModel = new TagModel()
+            {
+                Id = tag.Id,
+                Name = tag.Name,
+                Description=tag.Description,
+            };
+            return tagModel;
         }
 
         public IEnumerable<TagModel> GetTags()
@@ -44,9 +52,16 @@ namespace LessonsAtStartup.Services.TagService
             _tagRepository.Save();
         }
 
-        public void Update(TagModel tag)
+        public void Update(TagModel tagModel)
         {
-            throw new NotImplementedException();
+            Tag tag = new Tag()
+            {
+                Id= tagModel.Id,
+                Name = tagModel.Name,
+                Description= tagModel.Description
+            };
+            _tagRepository.UpdateTag(tag);
+            _tagRepository.Save();
         }
     }
 }

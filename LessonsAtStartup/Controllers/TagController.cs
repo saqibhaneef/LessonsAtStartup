@@ -37,5 +37,25 @@ namespace LessonsAtStartup.Controllers
             _tagService.Insert(tagModel);
             return Json("ok");
         }
+        public IActionResult _Edit(int id)
+        {
+
+            var tag=_tagService.GetById(id);
+            return PartialView(tag);
+        }
+        [HttpPost]
+        public IActionResult Edit(TagModel tagModel)
+        {
+
+            _tagService.Update(tagModel);
+
+            return Json("ok");
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _tagService.Delete(id);
+            return Json("ok"); ;
+        }
     }
 }

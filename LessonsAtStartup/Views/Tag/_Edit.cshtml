@@ -1,0 +1,75 @@
+﻿@model TagModel
+
+@{
+    Layout = null;
+}
+
+
+<form Id="UpdateForm" method="post">
+    <div class="modal-header">
+        <h5 class="modal-title" id="tagModalLabel">Update</h5>
+        <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">X</button>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12 input-group">
+            <input type="hidden" asp-for="Id"/>
+            <div class="col-md-12 p-1">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" asp-for="Name" class="form-control" id="name" placeholder="Enter name">
+                </div>
+            </div>
+            <div class="col-md-12 p-1">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" asp-for="Description" class="form-control" id="description" placeholder="Enter Description">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btnClose" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="btnUpdate">Update</button>
+    </div>
+</form>
+
+<script>
+
+    $("#UpdateForm").submit(function (e) {
+        e.preventDefault();
+        var fdata = new FormData(this);
+        $.ajax({
+            type: 'post',
+            url: "Tag/Edit",
+            data: fdata,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                $(".btnClose").click();
+                $('.modal-backdrop').remove();
+                if (response == "ok") {
+                    $('#ajaxresult').load('@Url.Action("_TagList")');
+                    swal({
+                        title: "Succes",
+                        text: "Updated!",
+                        icon: "success",
+                        button: "Ok",
+                    });
+                }
+                else {
+                    swal({
+                        title: "Info",
+                        text: "Something went wrong!",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+
+        })
+    });
+
+</script>

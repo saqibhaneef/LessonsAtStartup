@@ -42,19 +42,73 @@
     });
 
 
-    // function Edit(btn) {
-    //     var id = btn.id;
-    //     $.ajax({
-    //         url: "Post/_Edit",
-    //         method: "Get",
-    //         data: { id: id },
-    //         success: function (response) {
-    //             $("#modalBody").html(response);
-    //             $("#postModal").show({ show: true });
-    //         },
-    //         error: function () {
+    function Edit(btn) {
+        var id = btn.id;
+        $.ajax({
+            url: "Tag/_Edit",
+            method: "Get",
+            data: { id: id },
+            success: function (response) {
+                debugger
+                $("#modalBody").html(response);
+                $("#tagModal").show({ show: true });
+            },
+            error: function () {
 
-    //         },
-    //     });//ajax
-    // }
+            },
+        });//ajax
+    }
+
+    function Delete(btn) {
+        var id = btn.id;
+        $.ajax({
+            url: "Tag/Delete",
+            method: "Get",
+            data: { id: id },
+            success: function (response) {
+                if (response == "ok") {
+                    $('#ajaxresult').load('@Url.Action("_TagList")');
+                    $("#tagModal").hide();
+                    $('.modal-backdrop').remove();
+                    swal({
+                        title: "Succes",
+                        text: "Deleted!",
+                        icon: "success",
+                        button: "Ok",
+                    });
+                }
+                else {
+                    swal({
+                        title: "Info",
+                        text: "Something went wrong!",
+                        icon: "info",
+                        button: "Ok",
+                    });
+                }
+            },
+            error: function () {
+
+            },
+        });//ajax
+    }
+
+
+    function Confirmation(btn) {
+        swal({
+            title: "Are you sure to delete?",
+            text: "",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    Delete(btn);
+                } else {
+                    swal("Canceled!");
+                }
+            });
+    }
+
+
 </script>
