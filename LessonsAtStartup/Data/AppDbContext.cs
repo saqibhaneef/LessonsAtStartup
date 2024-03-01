@@ -11,14 +11,26 @@ namespace LessonsAtStartup.Data
         {
         }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<PostCategory> PostCategories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<PostTag> PostTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Post>().HasOne(p => p.Category).WithMany(x => x.Posts)
-                .HasForeignKey(x => x.CategoryId).HasPrincipalKey(x => x.Id).IsRequired(false);
+            
+            modelBuilder.Entity<PostCategory>()
+                .HasKey(pc => new { pc.PostId, pc.CategoryId });
+
+            modelBuilder.Entity<PostCategory>()
+                .HasOne(pc => pc.Post)
+                .WithMany(c => c.PostCategories)
+                .HasForeignKey(c => c.PostId);
+
+            modelBuilder.Entity<PostCategory>()
+                .HasOne(pc=>pc.Category)
+                .WithMany(c=>c.PostCategories)
+                .HasForeignKey(c=>c.CategoryId);
 
             modelBuilder.Entity<PostTag>()
         .HasKey(bc => new { bc.PostId, bc.TagId });
@@ -43,7 +55,7 @@ namespace LessonsAtStartup.Data
                     entity.Property("Url").IsRequired();
                     entity.Property("PublishedDate").IsRequired();
                     entity.Property("Country").IsRequired();
-                    entity.Property("CreatedOn").IsRequired();
+                    entity.Property("CreatedOn").IsRequired();                    
                     
                 });
 
