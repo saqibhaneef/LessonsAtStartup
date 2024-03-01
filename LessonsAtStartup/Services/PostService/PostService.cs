@@ -33,11 +33,11 @@ namespace LessonsAtStartup.Services.PostService
                 Url=post.Url,
                 Description=post.Description,
                 Country=post.Country,
-                Category=new CategoryModel()
-                {
-                    Id=post.Category.Id,
-                    Name=post.Category.Name,
-                },
+                //Category=new CategoryModel()
+                //{
+                //    Id=post.Category.Id,
+                //    Name=post.Category.Name,
+                //},
                 Tags=post.PostTags?.Select(t => new TagModel()
                 {
                     Id=t.Tag.Id,
@@ -56,13 +56,13 @@ namespace LessonsAtStartup.Services.PostService
                 Description = x.Description,
                 PublishedDate = x.PublishedDate,
                 CreatedOn = x.CreatedOn,
-                Category = new CategoryModel()
-                {
-                    Id = x.Category.Id,
-                    Name = x.Category.Name,
-                    Description = x.Category.Description,
-                    CreatedOn = x.Category.CreatedOn
-                },
+                //Category = new CategoryModel()
+                //{
+                //    Id = x.Category.Id,
+                //    Name = x.Category.Name,
+                //    Description = x.Category.Description,
+                //    CreatedOn = x.Category.CreatedOn
+                //},
                 Tags = x.PostTags.Select(y => new TagModel()
                 {
                     Id = y.TagId,
@@ -85,7 +85,7 @@ namespace LessonsAtStartup.Services.PostService
                 Url = postModel.Url,
                 Description = postModel.Description,
                 Country = postModel.Country,
-                CategoryId = postModel.CategoryId,
+                //CategoryId = postModel.CategoryId,
                 CreatedOn = DateTime.Now,
                 PublishedDate = postModel.PublishedDate               
             };                       
