@@ -55,13 +55,20 @@ namespace LessonsAtStartup.Controllers
             var tags= _tagService.GetTags();
             List<int> tagIds=new List<int>();
 
+            var categories = _categoryService.GetCategories();
+            List<int> categoryIds=new List<int>();
+
             var post = _postService.GetById(id);
             
             post.Tags.ToList().ForEach(x=>tagIds.Add(x.Id));//get tag ids against post
+            post.Categories?.ToList().ForEach(x=>categoryIds.Add(x.Id));
+
 
             post.Tags = tags;
             post.TagIds= tagIds;
-            post.Categories = _categoryService.GetCategories();
+
+            post.Categories = categories;
+            post.CategoryIds = categoryIds;
 
             return PartialView(post);
         }

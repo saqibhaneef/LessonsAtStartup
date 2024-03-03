@@ -32,12 +32,12 @@ namespace LessonsAtStartup.Services.PostService
                 Title=post.Title,
                 Url=post.Url,
                 Description=post.Description,
-                Country=post.Country,
-                //Category=new CategoryModel()
-                //{
-                //    Id=post.Category.Id,
-                //    Name=post.Category.Name,
-                //},
+                Country=post.Country,             
+                Categories=post.PostCategories.Select(c=>new CategoryModel()
+                {
+                    Id=c.Category.Id,
+                    Name=c.Category.Name,
+                }),
                 Tags=post.PostTags?.Select(t => new TagModel()
                 {
                     Id=t.Tag.Id,

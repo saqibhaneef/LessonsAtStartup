@@ -31,7 +31,7 @@
             <div class="form-group col-md-6">
                 <label for="tags">Tags</label>
                 <div class="form-group row pl-3">
-                <select name="TagIds" id="multiple-checkboxes" asp-for="TagIds" classs="form-control" asp-items="@(new SelectList(Model.Tags,"Id","Name"))" multiple="multiple"></select>
+                <select name="TagIds" id="tags-multiple-checkboxes" asp-for="TagIds" classs="form-control" asp-items="@(new SelectList(Model.Tags,"Id","Name"))" multiple="multiple"></select>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
             <div class="form-group col-md-6">
                 <label for="categoryids">Categories</label>
                 <div class="form-group row pl-3">
-                    <select name="categoryids" id="multiple-checkboxes" asp-for="CategoryIds" classs="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Name"))" multiple="multiple"></select>
+                    <select name="categoryids" id="categories-multiple-checkboxes" asp-for="CategoryIds" classs="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Name"))" multiple="multiple"></select>
                 </div>                
             </div>
             <div class="form-group col-md-6">
@@ -59,7 +59,7 @@
 <script>
 
     $(document).ready(function () {
-        $('#multiple-checkboxes').multiselect({
+        $('#tags-multiple-checkboxes,#categories-multiple-checkboxes').multiselect({
             includeSelectAllOption: true,
         });
     });
