@@ -33,11 +33,11 @@ namespace LessonsAtStartup.Services.PostService
                 Url=post.Url,
                 Description=post.Description,
                 Country=post.Country,
-                Category=new CategoryModel()
-                {
-                    Id=post.Category.Id,
-                    Name=post.Category.Name,
-                },
+                //Category=new CategoryModel()
+                //{
+                //    Id=post.Category.Id,
+                //    Name=post.Category.Name,
+                //},
                 Tags=post.PostTags?.Select(t => new TagModel()
                 {
                     Id=t.Tag.Id,
@@ -56,13 +56,20 @@ namespace LessonsAtStartup.Services.PostService
                 Description = x.Description,
                 PublishedDate = x.PublishedDate,
                 CreatedOn = x.CreatedOn,
-                Category = new CategoryModel()
+                //Category = new CategoryModel()
+                //{
+                //    Id = x.Category.Id,
+                //    Name = x.Category.Name,
+                //    Description = x.Category.Description,
+                //    CreatedOn = x.Category.CreatedOn
+                //},
+                Categories=x?.PostCategories?.Select(y=>new CategoryModel()
                 {
-                    Id = x.Category.Id,
-                    Name = x.Category.Name,
-                    Description = x.Category.Description,
-                    CreatedOn = x.Category.CreatedOn
-                },
+                    Id =y.CategoryId,
+                    Name=y.Category.Name,
+                    Description=y.Category.Description,
+                    CreatedOn=y.Category.CreatedOn
+                }),
                 Tags = x.PostTags.Select(y => new TagModel()
                 {
                     Id = y.TagId,
@@ -85,22 +92,38 @@ namespace LessonsAtStartup.Services.PostService
                 Url = postModel.Url,
                 Description = postModel.Description,
                 Country = postModel.Country,
-                CategoryId = postModel.CategoryId,
                 CreatedOn = DateTime.Now,
                 PublishedDate = postModel.PublishedDate               
             };                       
             _postRepository.InsertPost(post);
             _postRepository.Save();
 
-            foreach (var tagId in postModel.TagIds)
+            if (postModel.TagIds is not null)
             {
-                var postTag = new PostTag()
+                foreach (var tagId in postModel.TagIds)
                 {
-                    PostId=post.Id,
-                    TagId=tagId
-                };
-                _postRepository.InsertPostTag(postTag);
-                _postRepository.Save();
+                    var postTag = new PostTag()
+                    {
+                        PostId = post.Id,
+                        TagId = tagId
+                    };
+                    _postRepository.InsertPostTag(postTag);
+                    _postRepository.Save();
+                }
+            }
+
+            if (postModel.CategoryIds is not null)
+            {
+                foreach (var categoryId in postModel.CategoryIds)
+                {
+                    var postCategory = new PostCategory()
+                    {
+                        PostId = post.Id,
+                        CategoryId = categoryId
+                    };
+                    _postRepository.InsertPostCategory(postCategory);
+                    _postRepository.Save();
+                }
             }
         }
 

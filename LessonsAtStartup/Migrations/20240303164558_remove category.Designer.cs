@@ -4,6 +4,7 @@ using LessonsAtStartup.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LessonsAtStartup.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240303164558_remove category")]
+    partial class removecategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,29 +23,6 @@ namespace LessonsAtStartup.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("LessonsAtStartup.Data.Entities.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
-                });
 
             modelBuilder.Entity("LessonsAtStartup.Data.Entities.Post", b =>
                 {
@@ -77,27 +56,6 @@ namespace LessonsAtStartup.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
-                });
-
-            modelBuilder.Entity("LessonsAtStartup.Data.Entities.PostCategory", b =>
-                {
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.HasKey("PostId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("PostCategories");
                 });
 
             modelBuilder.Entity("LessonsAtStartup.Data.Entities.PostTag", b =>
@@ -141,25 +99,6 @@ namespace LessonsAtStartup.Migrations
                     b.ToTable("Tags");
                 });
 
-            modelBuilder.Entity("LessonsAtStartup.Data.Entities.PostCategory", b =>
-                {
-                    b.HasOne("LessonsAtStartup.Data.Entities.Category", "Category")
-                        .WithMany("PostCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LessonsAtStartup.Data.Entities.Post", "Post")
-                        .WithMany("PostCategories")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("Post");
-                });
-
             modelBuilder.Entity("LessonsAtStartup.Data.Entities.PostTag", b =>
                 {
                     b.HasOne("LessonsAtStartup.Data.Entities.Post", "Post")
@@ -179,15 +118,8 @@ namespace LessonsAtStartup.Migrations
                     b.Navigation("Tag");
                 });
 
-            modelBuilder.Entity("LessonsAtStartup.Data.Entities.Category", b =>
-                {
-                    b.Navigation("PostCategories");
-                });
-
             modelBuilder.Entity("LessonsAtStartup.Data.Entities.Post", b =>
                 {
-                    b.Navigation("PostCategories");
-
                     b.Navigation("PostTags");
                 });
 

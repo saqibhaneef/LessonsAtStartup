@@ -15,7 +15,8 @@ namespace LessonsAtStartup.Repositories.PostRepo
         public IEnumerable<Post> GetPosts()
         {
             return _context.Posts
-                .Include(category => category.Category)
+                .Include(category => category.PostCategories)
+                     .ThenInclude(category=> category.Category)
                 .Include(tag => tag.PostTags)
                      .ThenInclude(tag => tag.Tag).AsNoTracking()
                           .ToList();
@@ -23,7 +24,7 @@ namespace LessonsAtStartup.Repositories.PostRepo
         public Post GetPostById(int id)
         {
             return _context.Posts.
-                Include(x => x.Category).
+                Include(x => x.PostCategories).                      
                 Include(x => x.PostTags).
                        ThenInclude(x=>x.Tag).Where(x => x.Id == id).FirstOrDefault();
         }
@@ -65,6 +66,10 @@ namespace LessonsAtStartup.Repositories.PostRepo
         public void InsertPostTag(PostTag postTag)
         {
             _context.PostTags.Add(postTag);
+        }
+        public void InsertPostCategory(PostCategory postCategory)
+        {
+            _context.PostCategories.Add(postCategory);
         }
     }
 }

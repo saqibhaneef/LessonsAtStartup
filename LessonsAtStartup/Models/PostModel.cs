@@ -16,12 +16,10 @@ namespace LessonsAtStartup.Models
         [Required]
         public string Country { get; set; }
 
-        public DateTime CreatedOn { get; set; }
-
-        public int CategoryId { get; set; }
-        public CategoryModel Category { get; set; }
+        public DateTime CreatedOn { get; set; }      
 
         public IEnumerable<CategoryModel> Categories { get; set; }
+        public IEnumerable<int> CategoryIds { get; set; }
 
         public IEnumerable<TagModel> Tags { get; set; }
         public IEnumerable<int> TagIds { get; set; }

@@ -39,7 +39,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="category">Category</label>
-                <select id="category" class="form-control" asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    <select name="categoryIds" id="multiple-checkboxes" asp-for="CategoryIds" classs="form-control" asp-items="@(new MultiSelectList(Model.Categories,"Id","Name"))" multiple="multiple"></select>
                     <option value="">--Select--</option>
                 </select>
             </div>

@@ -30,7 +30,7 @@
                     {
                         <tr>
                             <td>@item.Id</td>
-                            <td>@item.Title>
+                            <td>@item.Title</td>
                             <td>@item.Description</td>
                             <td>@item.Url</td>
                             <td>
@@ -39,7 +39,14 @@
                                     <span class="badge badge-info">@tag.Name</span>
                                     }
                             </td>
-                            <td>@item.Category.Name</td>
+                            <td>
+                                @if(item.Categories is not null){
+                                    @foreach (var category in item.Categories)
+                                    {
+                                    <span class="badge badge-info">@category.Name</span>
+                                    }
+                                }
+                            </td>
                             <td>@item.Country</td>
                             <td>@item.CreatedOn</td>
                             <th>

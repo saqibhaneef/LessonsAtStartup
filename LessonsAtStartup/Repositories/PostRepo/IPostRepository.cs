@@ -9,6 +9,7 @@ namespace LessonsAtStartup.Repositories.PostRepo
         Post GetPostById(int postId);
         void InsertPost(Post post);
         void InsertPostTag(PostTag postTag);
+        void InsertPostCategory(PostCategory postTag);
         void DeletePost(int postId);
         void UpdatePost(Post post);
         void Save();
