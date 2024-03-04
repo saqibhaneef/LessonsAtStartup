@@ -62,7 +62,7 @@
             includeSelectAllOption: true,
         });
     });
-
+    BindCountries();
     $("#UpdateForm").submit(function (e) {
         e.preventDefault();
         var fdata = new FormData(this);
@@ -76,7 +76,7 @@
                 $(".btnClose").click();
                 $('.modal-backdrop').remove();
                 if (response == "ok") {
-                    $('#ajaxresult').load('@Url.Action("_PostList")');
+                    $('#ajaxresult').load('@Url.Action("_PostsList")');
                     swal({
                         title: "Succes",
                         text: "Updated!",

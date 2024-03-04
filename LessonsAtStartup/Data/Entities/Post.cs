@@ -4,6 +4,11 @@ namespace LessonsAtStartup.Data.Entities
 {
     public class Post
     {
+        public Post()
+        {
+            PostCategories=new List<PostCategory>();
+            PostTags=new List<PostTag>();
+        }
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

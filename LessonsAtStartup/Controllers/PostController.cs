@@ -61,7 +61,7 @@ namespace LessonsAtStartup.Controllers
             var post = _postService.GetById(id);
             
             post.Tags.ToList().ForEach(x=>tagIds.Add(x.Id));//get tag ids against post
-            post.Categories?.ToList().ForEach(x=>categoryIds.Add(x.Id));
+            post.Categories.ToList().ForEach(x=>categoryIds.Add(x.Id));
 
 
             post.Tags = tags;

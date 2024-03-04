@@ -20,7 +20,7 @@ namespace LessonsAtStartup.Repositories.TagRepo
             //         .ThenInclude(tag => tag.Tag).AsNoTracking()
             //              .ToList();
 
-            return _context.Tags.AsNoTracking().ToList();
+            return _context.Tags.ToList();
         }
         public Tag GetTagById(int id)
         {

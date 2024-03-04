@@ -1,9 +1,11 @@
 ﻿using LessonsAtStartup.Data;
 using LessonsAtStartup.Data.Entities;
+using LessonsAtStartup.Migrations;
 using LessonsAtStartup.Models;
 using LessonsAtStartup.Repositories.PostRepo;
 using LessonsAtStartup.Repositories.TagRepo;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using System.Linq;
 
 namespace LessonsAtStartup.Services.PostService
@@ -38,7 +40,7 @@ namespace LessonsAtStartup.Services.PostService
                     Id=c.Category.Id,
                     Name=c.Category.Name,
                 }),
-                Tags=post.PostTags?.Select(t => new TagModel()
+                Tags=post.PostTags.Select(t => new TagModel()
                 {
                     Id=t.Tag.Id,
                     Name=t.Tag.Name
@@ -56,6 +58,7 @@ namespace LessonsAtStartup.Services.PostService
                 Description = x.Description,
                 PublishedDate = x.PublishedDate,
                 CreatedOn = x.CreatedOn,
+                Country=x.Country,
                 //Category = new CategoryModel()
                 //{
                 //    Id = x.Category.Id,
@@ -108,7 +111,7 @@ namespace LessonsAtStartup.Services.PostService
                         TagId = tagId
                     };
                     _postRepository.InsertPostTag(postTag);
-                    _postRepository.Save();
+                    //_postRepository.Save();
                 }
             }
 
@@ -122,14 +125,19 @@ namespace LessonsAtStartup.Services.PostService
                         CategoryId = categoryId
                     };
                     _postRepository.InsertPostCategory(postCategory);
-                    _postRepository.Save();
                 }
             }
+            _postRepository.Save();
         }
 
         public void Update(PostModel postModel)
         {
-            Post post = new Post()
+            var existingPost = _postRepository.GetPostById(postModel.Id);
+            var existingCategories=existingPost.PostCategories.Where(x=>x.PostId==existingPost.Id).ToList();
+            var existingTags=existingPost.PostTags.Where(x=>x.PostId == existingPost.Id).ToList();
+
+
+            Post updatedPost = new Post()
             {
                 Id = postModel.Id,
                 Title = postModel.Title,
@@ -137,8 +145,63 @@ namespace LessonsAtStartup.Services.PostService
                 Description = postModel.Description,
                 Country = postModel.Country
             };
-            _postRepository.UpdatePost(post);
-            _postRepository.Save();
+            _postRepository.UpdatePost(updatedPost);
+            //remove uncheck tags if exists in database
+            foreach (var tag in existingTags)
+            {
+                PostTag postTag = new PostTag()
+                {
+                    Id=tag.Id,
+                    TagId = tag.TagId,
+                    PostId=tag.PostId
+                };
+                if (!postModel.TagIds.Contains(tag.TagId))
+                    _postRepository.DeletePostTag(postTag);
+            }
+            //save new checked tags            
+            foreach (var tagId in postModel.TagIds)
+            {
+                if (!existingTags.Select(x => x.TagId).Contains(tagId))
+                {
+                    var postTag = new PostTag()
+                    {
+                        PostId = postModel.Id,
+                        TagId = tagId
+                    };
+                    _postRepository.InsertPostTag(postTag);
+                }
+                //_postRepository.Save();
+            }
+
+
+            //remove uncheck categories if exist in database
+            foreach (var category in existingCategories)
+            {
+                PostCategory postCategory = new PostCategory()
+                {
+                    Id = category.Id,
+                    CategoryId = category.CategoryId,
+                    PostId = category.PostId
+                };
+                if (!postModel.CategoryIds.Contains(category.CategoryId))
+                    _postRepository.DeletePostCategory(postCategory);
+            }
+            //save nnew checked categories            
+            foreach (var categoryId in postModel.CategoryIds)
+            {
+                if (!existingCategories.Select(x => x.CategoryId).Contains(categoryId))
+                {
+                    var postCategory = new PostCategory()
+                    {
+                        PostId = postModel.Id,
+                        CategoryId = categoryId
+                    };
+                    _postRepository.InsertPostCategory(postCategory);
+                }
+            }
+
+
+            _postRepository.Save();           
 
 
         }
